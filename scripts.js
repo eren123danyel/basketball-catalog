@@ -23,72 +23,74 @@
  * 
  */
 
+// Global Variables
+let paginationIndex = 0;
+let cardsPerPage = 10; 
 
-const FRESH_PRINCE_URL = "https://upload.wikimedia.org/wikipedia/en/3/33/Fresh_Prince_S1_DVD.jpg";
-const CURB_POSTER_URL = "https://m.media-amazon.com/images/M/MV5BZDY1ZGM4OGItMWMyNS00MDAyLWE2Y2MtZTFhMTU0MGI5ZDFlXkEyXkFqcGdeQXVyMDc5ODIzMw@@._V1_FMjpg_UX1000_.jpg";
-const EAST_LOS_HIGH_POSTER_URL = "https://static.wikia.nocookie.net/hulu/images/6/64/East_Los_High.jpg";
-
-// This is an array of strings (TV show titles)
-let titles = [
-    "Fresh Prince of Bel Air",
-    "Curb Your Enthusiasm",
-    "East Los High"
-];
-// Your final submission should have much more data than this, and 
-// you should use more than just an array of strings to store it all.
-
-
-// This function adds cards the page to display the data in the array
-function showCards() {
-    const cardContainer = document.getElementById("card-container");
-    cardContainer.innerHTML = "";
-    const templateCard = document.querySelector(".card");
+async function loadData() {
+    let data;
+    await fetch('./data/players.json')
+    .then((response) => response.json())
+    .then((json) => {data = json})
+    .catch((error) => console.log(error));
     
-    for (let i = 0; i < titles.length; i++) {
-        let title = titles[i];
+    return data;
+}
 
-        // This part of the code doesn't scale very well! After you add your
-        // own data, you'll need to do something totally different here.
-        let imageURL = "";
-        if (i == 0) {
-            imageURL = FRESH_PRINCE_URL;
-        } else if (i == 1) {
-            imageURL = CURB_POSTER_URL;
-        } else if (i == 2) {
-            imageURL = EAST_LOS_HIGH_POSTER_URL;
-        }
+// Remove all cards 
+function removeAll() {
+    document.querySelectorAll(".card").forEach(el => {if (!el.classList.contains('hidden')){el.remove()}}); // Remove all cards but the template card
+}
 
-        const nextCard = templateCard.cloneNode(true); // Copy the template card
-        editCardContent(nextCard, title, imageURL); // Edit title and image
-        cardContainer.appendChild(nextCard); // Add new card to the container
+function pagination(dir) {
+    console.log(dir);
+    if (dir == 'right') {
+        paginationIndex++;
     }
+    if (dir == 'left') {
+        paginationIndex--;
+    }
+    removeAll();
+    showCards();
 }
 
-function editCardContent(card, newTitle, newImageURL) {
-    card.style.display = "block";
+  
 
-    const cardHeader = card.querySelector("h2");
-    cardHeader.textContent = newTitle;
+async function editCardContent(card,playerFirst,playerLast,playerId) {
+    const image = card.querySelector('img');
+    const name = card.querySelector('h2');
 
-    const cardImage = card.querySelector("img");
-    cardImage.src = newImageURL;
-    cardImage.alt = newTitle + " Poster";
-
-    // You can use console.log to help you debug!
-    // View the output by right clicking on your website,
-    // select "Inspect", then click on the "Console" tab
-    console.log("new card:", newTitle, "- html: ", card);
+    name.textContent = playerFirst + " " + playerLast;
+    image.src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + encodeURIComponent(playerId) +".png";
 }
+
+
+
+async function showCards() {
+    const data = await loadData();
+    const template = document.querySelector('.card');
+    const container = document.querySelector('#card-grid')
+
+    for (let i=cardsPerPage*paginationIndex; i<cardsPerPage*paginationIndex+cardsPerPage; i++) {
+        const nextCard = template.cloneNode(true); // Copy the template card
+        nextCard.classList.remove("hidden"); // Make sure they aren't hidden
+        console.log();
+        editCardContent(nextCard,data[i].firstName,data[i].lastName,data[i].playerId);
+        container.appendChild(nextCard);
+        
+    }
+
+    const left = document.querySelector('#left');
+    const right = document.querySelector('#right');
+
+    if (paginationIndex*cardsPerPage <= 0) {left.classList.add('hidden');} else {left.classList.remove('hidden');}
+    if (paginationIndex*cardsPerPage+cardsPerPage >= data.length) {left.classList.add('hidden');} else {right.classList.remove('hidden');}
+
+     // Show page number
+     document.querySelector('#page-number').textContent = "Page " + (paginationIndex+1) + " of " + Math.ceil(data.length / cardsPerPage); 
+
+}
+
 
 // This calls the addCards() function when the page is first loaded
 document.addEventListener("DOMContentLoaded", showCards);
-
-function quoteAlert() {
-    console.log("Button Clicked!")
-    alert("I guess I can kiss heaven goodbye, because it got to be a sin to look this good!");
-}
-
-function removeLastCard() {
-    titles.pop(); // Remove last item in titles array
-    showCards(); // Call showCards again to refresh
-}

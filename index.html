@@ -2,37 +2,31 @@
 <html>
 
 <head>
-    <title>LA TV Shows | Home</title>
-    <meta name="description" content="A Catalog of Shows Set in Los Angeles">
+    <title>Basketball Fantasy</title>
+    <meta name="description" content="A Catalog of basketball players and fantasy team">
     <link rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="scripts.js"></script>
+    <meta charset="UTF-8">
 </head>
 
 <body>
-    <header class="main-header">
-        <h1 class="title">LA TV Shows</h1>
-    </header>
-    <div id="card-container">
-        
-    </div>
-    <div class="card" style="display: none;">
-        <div class="card-content">
-            <h2>TV Show Title</h2>
-            <img src="" alt="TV Show Poster">
-            <ul>
-                <li>Bullet Point 1</li>
-                <li>Bullet Point 2</li>
-                <li>Bullet Point 3</li>
-            </ul>
+    <h1 id="basketball-title">Basketball Fantasy Team 🏀</h1>
+    <div id="layout">
+        <div>
+            <div id="card-grid" class="grid-item">
+                <div class="card hidden">
+                  <h2 class="player-name">PLAYER NAME</h2>
+                  <img class="player-image">
+                </div>
+            </div>
+            <div id="pagination">
+                <button onClick="pagination('left');" id="left"><</button>
+                <p style="margin-inline:0.5rem;" id="page-number">Page # of #</p>
+                <button  onClick="pagination('right');" id="right">></button>
+            </div>
         </div>
-    </div>
-    <div class="footer">
-        <button onclick="quoteAlert();">
-            Get A Quote!
-        </button>
-        <button onclick="removeLastCard();">
-            Remove A Card!
-        </button>
+        <div id="basketball-court" class="grid-item">
+        </div>
     </div>
 </body>
 
