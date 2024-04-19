@@ -52,6 +52,10 @@ async function loadData() {
     return data;
 }
 
+// Remove all cards from board
+function removeBoard() {
+    document.querySelectorAll('.dropped').forEach((card) => card.remove());
+}
 
 // Remove all cards 
 function removeAll() {
