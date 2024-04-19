@@ -10,7 +10,7 @@ function allowDrop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text/plain");
     var draggedElement = new DOMParser().parseFromString(data, "text/html").body.firstChild;
-    
+    draggedElement.classList.add('dropped');
     ev.target.innerHTML = '';
     ev.target.appendChild(draggedElement);
   }

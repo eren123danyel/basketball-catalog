@@ -12,7 +12,7 @@
 #basketball-title {
     text-align: center;
     font-weight: bold;
-    margin-block: 2rem;
+    margin-top: 2rem;
 }
 
 #layout {
@@ -20,7 +20,6 @@
     width: 95%;
     margin: auto;
     grid-template-columns: 50% 50%;
-    height:100%
 }
 
 .grid-item {
@@ -30,9 +29,11 @@
 #card-grid {
     display: grid;
     width: 100%;
+    height: 100%;
     justify-items: center;
     align-items: center;
     grid-template-columns: repeat(auto-fit,minmax(10rem,1fr));
+    grid-template-rows: repeat(auto-fit,minmax(5rem,1fr));
     grid-gap: 2rem;
 }
 
@@ -40,7 +41,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
     flex-grow: 1;
     width: 10rem;
     cursor:move;
@@ -52,6 +52,7 @@
 
 #pagination {
     margin-top: 1rem;
+    padding-bottom: 2rem;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -59,7 +60,7 @@
 
 #basketball-court {
     width: 100%;
-    height: 100%;
+    height: 90vh;
     position: relative;
     background-image: url('./img/2basketball_court.jpg');
     background-repeat: no-repeat;
@@ -93,7 +94,7 @@
 
 #five {
     position:absolute;
-    bottom:85%;
+    bottom:80%;
     right:35%;
 }
 
@@ -121,4 +122,27 @@
     font-weight: bold;
     padding-inline: 0.5rem;
     border-radius: 999999px;
+    cursor: pointer;
+}
+
+#left:hover, #right:hover {
+    background-color: gray;
+}
+
+#search-container {
+    width: 20%;
+    padding: 0.2rem;
+    border-radius: 999999px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    margin: 1rem auto 1rem auto;
+}
+
+#search-bar, #search-bar:focus {
+    width: 100%;
+    height: 100%;
+    outline:none;
+    border: 0;
 }

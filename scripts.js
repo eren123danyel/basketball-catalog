@@ -25,7 +25,14 @@
 
 // Global Variables
 let paginationIndex = 0;
-let cardsPerPage = 10; 
+const cardsPerPage = 10; 
+let query;
+
+function search(value) {
+    query = value;
+    paginationIndex = 0;
+    showCards();
+}
 
 async function loadData() {
     let data;
@@ -34,23 +41,37 @@ async function loadData() {
     .then((json) => {data = json})
     .catch((error) => console.log(error));
     
+    if(query) {
+        const queryParts = query.toLowerCase().split(" ");
+        return data.filter((item) => 
+            queryParts.every((value) => 
+            item.firstName.toLowerCase().includes(value) || 
+            item.lastName.toLowerCase().includes(value)));
+    }
+
     return data;
 }
 
+
 // Remove all cards 
 function removeAll() {
-    document.querySelectorAll(".card").forEach(el => {if (!el.classList.contains('hidden')){el.remove()}}); // Remove all cards but the template card
+    const cards = document.querySelectorAll(".card");
+    cards.forEach(card => {
+        // Remove all cards but the template card and dropped elements
+        if (card.classList.contains('hidden') || card.classList.contains('dropped')){
+            return;
+        } 
+        card.remove();
+        }); 
 }
 
 function pagination(dir) {
-    console.log(dir);
     if (dir == 'right') {
-        paginationIndex++;
+        paginationIndex+=1;
     }
     if (dir == 'left') {
-        paginationIndex--;
+        paginationIndex-=1;
     }
-    removeAll();
     showCards();
 }
 
@@ -68,11 +89,17 @@ async function editCardContent(card,playerFirst,playerLast,playerId) {
 
 
 async function showCards() {
+    removeAll();//Clear board
     const data = await loadData();
+    console.log(data);
     const template = document.querySelector('.card');
     const container = document.querySelector('#card-grid')
 
-    for (let i=cardsPerPage*paginationIndex; i<cardsPerPage*paginationIndex+cardsPerPage; i++) {
+    const startIndex = cardsPerPage * paginationIndex;
+    const endIndex = Math.min(startIndex + cardsPerPage, data.length);
+
+
+    for (let i=startIndex; i<endIndex; i++) {
         const nextCard = template.cloneNode(true); // Copy the template card
         nextCard.classList.remove("hidden"); // Make sure they aren't hidden
         console.log();
@@ -80,15 +107,24 @@ async function showCards() {
         container.appendChild(nextCard);
         
     }
+    // Show page number
+    document.querySelector('#page-number').textContent = "Page " + (paginationIndex+1) + " of " + Math.ceil(data.length / cardsPerPage); 
+
 
     const left = document.querySelector('#left');
     const right = document.querySelector('#right');
 
-    if (paginationIndex*cardsPerPage <= 0) {left.classList.add('hidden');} else {left.classList.remove('hidden');}
-    if (paginationIndex*cardsPerPage+cardsPerPage >= data.length) {left.classList.add('hidden');} else {right.classList.remove('hidden');}
-
-     // Show page number
-     document.querySelector('#page-number').textContent = "Page " + (paginationIndex+1) + " of " + Math.ceil(data.length / cardsPerPage); 
+    if (startIndex <= 0) {
+        left.classList.add('hidden');
+    } else {
+        left.classList.remove('hidden');
+    }
+    
+    if (endIndex >= data.length) {
+        right.classList.add('hidden');
+    } else {
+        right.classList.remove('hidden');
+    }
 
 }
 
