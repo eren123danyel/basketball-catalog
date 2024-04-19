@@ -75,31 +75,31 @@
 
 #one {
     position:absolute;
-    bottom:25%;
+    bottom:35%;
     right:50%;
 }
 
 #two {
     position:absolute;
-    bottom:80%;
-    right:85%;
+    bottom:90%;
+    right:90%;
 }
 
 #three {
     position:absolute;
-    bottom:80%;
-    right:15%;
+    bottom:90%;
+    right:10%;
 }
 
 #four {
     position:absolute;
-    bottom:50%;
+    bottom:60%;
     right:65%;
 }
 
 #five {
     position:absolute;
-    bottom:80%;
+    bottom:90%;
     right:35%;
 }
 

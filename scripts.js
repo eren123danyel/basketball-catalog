@@ -43,10 +43,22 @@ async function loadData() {
     
     if(query) {
         const queryParts = query.toLowerCase().split(" ");
-        return data.filter((item) => 
-            queryParts.every((value) => 
-            item.firstName.toLowerCase().includes(value) || 
-            item.lastName.toLowerCase().includes(value)));
+        const results = data.filter((item) => 
+        queryParts.every((value) => 
+        item.firstName.toLowerCase().includes(value) || 
+        item.lastName.toLowerCase().includes(value)));
+        
+        if (!results.length) {
+            return ([
+                {
+                    firstName:"Sorry!",
+                    lastName:"No search results found!",
+                    playerId:2544
+                }
+            ]);
+        }
+        return results;
+
     }
 
     return data;
@@ -106,7 +118,6 @@ async function showCards() {
     for (let i=startIndex; i<endIndex; i++) {
         const nextCard = template.cloneNode(true); // Copy the template card
         nextCard.classList.remove("hidden"); // Make sure they aren't hidden
-        console.log();
         editCardContent(nextCard,data[i].firstName,data[i].lastName,data[i].playerId);
         container.appendChild(nextCard);
         
