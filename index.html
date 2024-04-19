@@ -6,6 +6,7 @@
     <meta name="description" content="A Catalog of basketball players and fantasy team">
     <link rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="scripts.js"></script>
+    <script type="text/javascript" src="draganddrop.js"></script>
     <meta charset="UTF-8">
 </head>
 
@@ -14,9 +15,9 @@
     <div id="layout">
         <div>
             <div id="card-grid" class="grid-item">
-                <div class="card hidden">
+                <div class="card hidden" draggable="true" ondragstart="drag(event)">
                   <h2 class="player-name">PLAYER NAME</h2>
-                  <img class="player-image">
+                  <img class="player-image" draggable="false">
                 </div>
             </div>
             <div id="pagination">
@@ -26,6 +27,11 @@
             </div>
         </div>
         <div id="basketball-court" class="grid-item">
+            <div id="one" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div id="two" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div id="three" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div id="four" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div id="five" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         </div>
     </div>
 </body>

@@ -62,6 +62,7 @@ async function editCardContent(card,playerFirst,playerLast,playerId) {
 
     name.textContent = playerFirst + " " + playerLast;
     image.src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + encodeURIComponent(playerId) +".png";
+    image.alt = "Picture of " + playerFirst + " " + playerLast;
 }
 
 

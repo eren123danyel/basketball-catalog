@@ -19,7 +19,7 @@
     display: grid;
     width: 95%;
     margin: auto;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 50% 50%;
     height:100%
 }
 
@@ -28,7 +28,6 @@
 }
 
 #card-grid {
-    border-right: 1px solid black;
     display: grid;
     width: 100%;
     justify-items: center;
@@ -44,6 +43,7 @@
     height: 100%;
     flex-grow: 1;
     width: 10rem;
+    cursor:move;
 }
 
 .card > img {
@@ -60,5 +60,71 @@
 #basketball-court {
     background-image: url('./img/5basketball_court.jpg');
     background-repeat: no-repeat;
-    background-size:cover;
+    background-position: center;
+    background-size:contain;
+}
+#one {
+    position:absolute;
+    bottom:0;
+    right:0;
+    margin-bottom:32% !important; 
+    margin-right:24.2% !important;
+}
+
+
+#two {
+    position:absolute;
+    bottom:0;
+    right:0;
+    margin-bottom:45% !important; 
+    margin-right:35.2% !important;
+}
+
+#three {
+    position:absolute;
+    bottom:0;
+    right:0;
+    margin-bottom:45% !important; 
+    margin-right:13.3% !important;
+}
+
+#four {
+    position:absolute;
+    bottom:0;
+    right:0;
+    margin-bottom:45% !important; 
+    margin-right:27% !important;
+}
+
+#five {
+    position:absolute;
+    bottom:0;
+    right:0;
+    margin-bottom:39% !important; 
+    margin-right:22% !important;
+}
+
+#one, #two, #three,#four,#five {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#one > .card, #two > .card, #three > .card, #four > .card, #five > .card {
+    max-width: 100%;
+    max-height: 90%;
+    font-size: 0.5rem;
+    object-fit: contain;
+}
+
+#left, #right {
+    border: 0;
+    font-weight: bold;
+    padding-inline: 0.5rem;
+    border-radius: 999999px;
 }
